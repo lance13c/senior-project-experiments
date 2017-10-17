@@ -17,20 +17,31 @@
           </a-scene>
     </body>
 
-    <script>
-        let webrtc = new SimpleWebRTC({
+<script>
+    let webrtc = new SimpleWebRTC({
         // the id/element dom element that will hold "our" video
         localVideoEl: 'localVideo',
         // the id/element dom element that will hold remote videos
         remoteVideosEl: 'remotesVideos',
         // immediately ask for camera access
         autoRequestMedia: true
-});
+    });
 
     // we have to wait until it's ready
-webrtc.on('readyToCall', function () {
-  // you can name it anything
-  webrtc.joinRoom('your awesome room name');
-});
+    webrtc.on('readyToCall', function () {
+        // you can name it anything
+        webrtc.joinRoom('your awesome room name');
+    });
+
+    getScreenMedia(function (err, stream) {
+    // if the browser doesn't support user media
+    // or the user says "no" the error gets passed
+    // as the first argument.
+        if (err) {
+            console.log('failed');
+        } else {
+            console.log('got a stream', stream);  
+        }
+    });
     </script>
 </html>
