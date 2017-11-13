@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" src="./main.css">
         <script src="https://simplewebrtc.com/latest-v2.js"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.7.0/aframe-master.js"></script>
     </head>
     <body>
-        <a-scene>
+        <a-scene style="height: 80%;">
             <a-assets>
-              <video id="localVideo" autoplay></video>
-            </a-assets>
-            <!-- Using the asset management system. -->
-            <a-video src="#localVideo" width="16" height="9" position="0 0 -20"></a-video>
+              <video id="localVideo"></video>
+            </a-assets
+            <a-video src="#localVideo"  width="16" height="9" position="0 0 -20"></a-video>
             <!-- Defining the URL inline. Not recommended but more comfortable for web developers. -->
-            <a-video src="airbending.mp4"></a-video>
             <a-box width="1" height="1" depth="1"></a-box>
           </a-scene>
+
+          <button name="StartSS">StartSS</button>
+          <button name="StopSS">Stop SS</button>
     </body>
 
 <script>
-    let webrtc = new SimpleWebRTC({
-        // the id/element dom element that will hold "our" video
-        localVideoEl: 'localVideo',
-        // the id/element dom element that will hold remote videos
-        remoteVideosEl: 'remotesVideos',
-        // immediately ask for camera access
-        autoRequestMedia: true
-    });
+        let webrtc = new SimpleWebRTC({
+            // the id/element dom element that will hold "our" video
+            localVideoEl: 'localVideo',
+            // the id/element dom element that will hold remote videos
+            remoteVideosEl: 'remotesVideos',
+            // immediately ask for camera access
+            autoRequestMedia: true
+        });
 
-    // we have to wait until it's ready
-    webrtc.on('readyToCall', function () {
-        // you can name it anything
-        webrtc.joinRoom('your awesome room name');
-    });
+        // we have to wait until it's ready
+        webrtc.on('readyToCall', function () {
+            // you can name it anything
+            webrtc.joinRoom('your awesome room name');
+        });
 
-    getScreenMedia(function (err, stream) {
-    // if the browser doesn't support user media
-    // or the user says "no" the error gets passed
-    // as the first argument.
-        if (err) {
-            console.log('failed');
-        } else {
-            console.log('got a stream', stream);  
-        }
-    });
+        console.log(webrtc);
+
+        let startSS = document.querySelector("button[name='startSS']");
+        console.log("StartSS: ", startSS)
+        // setTimeout(() => {
+        //     webrtc.shareScreen(() => {
+        //         console.log("Screen Share!!!");;
+        //     });
+        // }, 2000);
+
+        // setTimeout(() => {
+        //     webrtc.stopScreenShare();
+        // }, 8000);            
+    
     </script>
 </html>
